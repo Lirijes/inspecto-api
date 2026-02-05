@@ -1,0 +1,12 @@
+# Visual Studio
+.vs/
+bin/
+obj/
+
+# Environment variables
+.env
+.env.*
+
+# Rider / VS Code (safe to have)
+.idea/
+.vscode/
