@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace inspecto_API.Models;
 
-public partial class profiles
+public partial class Profile
 {
     public Guid id { get; set; }
 

@@ -11,15 +11,15 @@ public partial class AppDbContext : DbContext
     {
     }
 
-    public virtual DbSet<activity_logs> activity_logs { get; set; }
+    public virtual DbSet<Activity_log> activity_logs { get; set; }
 
-    public virtual DbSet<cases> cases { get; set; }
+    public virtual DbSet<Case> cases { get; set; }
 
-    public virtual DbSet<inspections> inspections { get; set; }
+    public virtual DbSet<Inspection> inspections { get; set; }
 
-    public virtual DbSet<objects> objects { get; set; }
+    public virtual DbSet<Facility> facilities { get; set; }
 
-    public virtual DbSet<profiles> profiles { get; set; }
+    public virtual DbSet<Profile> profiles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -42,7 +42,7 @@ public partial class AppDbContext : DbContext
             .HasPostgresExtension("graphql", "pg_graphql")
             .HasPostgresExtension("vault", "supabase_vault");
 
-        modelBuilder.Entity<activity_logs>(entity =>
+        modelBuilder.Entity<Activity_log>(entity =>
         {
             entity.HasKey(e => e.id).HasName("activity_logs_pkey");
 
@@ -51,7 +51,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.details).HasColumnType("jsonb");
         });
 
-        modelBuilder.Entity<cases>(entity =>
+        modelBuilder.Entity<Case>(entity =>
         {
             entity.HasKey(e => e.id).HasName("cases_pkey");
 
@@ -61,13 +61,13 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.status).HasDefaultValueSql("'open'::text");
             entity.Property(e => e.updated_at).HasDefaultValueSql("now()");
 
-            entity.HasOne(d => d.inspection).WithMany(p => p.cases)
+            entity.HasOne(d => d.Inspection).WithMany(p => p.Cases)
                 .HasForeignKey(d => d.inspection_id)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("cases_inspection_id_fkey");
         });
 
-        modelBuilder.Entity<inspections>(entity =>
+        modelBuilder.Entity<Inspection>(entity =>
         {
             entity.HasKey(e => e.id).HasName("inspections_pkey");
 
@@ -76,13 +76,13 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.status).HasDefaultValueSql("'scheduled'::text");
             entity.Property(e => e.updated_at).HasDefaultValueSql("now()");
 
-            entity.HasOne(d => d._object).WithMany(p => p.inspections)
+            entity.HasOne(d => d.Facility).WithMany(p => p.Inspections)
                 .HasForeignKey(d => d.object_id)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("inspections_object_id_fkey");
         });
 
-        modelBuilder.Entity<objects>(entity =>
+        modelBuilder.Entity<Facility>(entity =>
         {
             entity.HasKey(e => e.id).HasName("objects_pkey");
 
@@ -92,7 +92,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.updated_at).HasDefaultValueSql("now()");
         });
 
-        modelBuilder.Entity<profiles>(entity =>
+        modelBuilder.Entity<Profile>(entity =>
         {
             entity.HasKey(e => e.id).HasName("profiles_pkey");
 

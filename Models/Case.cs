@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace inspecto_API.Models;
 
-public partial class cases
+public partial class Case
 {
     public Guid id { get; set; }
 
@@ -29,5 +29,5 @@ public partial class cases
 
     public DateTime? updated_at { get; set; }
 
-    public virtual inspections? inspection { get; set; }
+    public Inspection? Inspection { get; set; }
 }

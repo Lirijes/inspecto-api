@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace inspecto_API.Models;
 
-public partial class activity_logs
+public partial class Activity_log
 {
     public Guid id { get; set; }
 
