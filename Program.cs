@@ -1,4 +1,16 @@
+using inspecto_API.Models;
+using Microsoft.EntityFrameworkCore;
+using DotNetEnv;
+
+DotNetEnv.Env.Load();
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(
+        Environment.GetEnvironmentVariable("DATABASE_URL")
+    )
+);
 
 // Add services to the container.
 builder.Services.AddControllers();

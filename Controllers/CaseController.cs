@@ -1,12 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using inspecto_API.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace inspecto_API.Controllers
 {
-    public class CaseController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class CasesController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly AppDbContext _db;
+
+        public CasesController(AppDbContext db)
         {
-            return View();
+            _db = db;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var cases = await _db.cases.ToListAsync();
+            return Ok(cases);
         }
     }
 }
