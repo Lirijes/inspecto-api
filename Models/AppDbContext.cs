@@ -53,6 +53,8 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<Case>(entity =>
         {
+            entity.ToTable("cases");
+
             entity.HasKey(e => e.id).HasName("cases_pkey");
 
             entity.Property(e => e.id).HasDefaultValueSql("gen_random_uuid()");
@@ -69,6 +71,8 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<Inspection>(entity =>
         {
+            entity.ToTable("inspections"); 
+
             entity.HasKey(e => e.id).HasName("inspections_pkey");
 
             entity.Property(e => e.id).HasDefaultValueSql("gen_random_uuid()");
@@ -84,6 +88,8 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<Facility>(entity =>
         {
+            entity.ToTable("objects");
+
             entity.HasKey(e => e.id).HasName("objects_pkey");
 
             entity.Property(e => e.id).HasDefaultValueSql("gen_random_uuid()");

@@ -8,7 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
-        Environment.GetEnvironmentVariable("DATABASE_URL")
+        Environment.GetEnvironmentVariable("DATABASE_URL"),
+        npgsql =>
+        {
+            npgsql.CommandTimeout(30);
+            npgsql.EnableRetryOnFailure(
+                maxRetryCount: 3,
+                maxRetryDelay: TimeSpan.FromSeconds(5),
+                errorCodesToAdd: null
+            );
+        }
     )
 );
 
